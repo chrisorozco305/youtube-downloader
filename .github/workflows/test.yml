@@ -21,7 +21,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: backend/package-lock.json
       - run: npm install
-      - run: npm test
+      - run: npx jest --verbose
 
   frontend:
     name: Frontend Tests
@@ -37,4 +37,4 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
       - run: npm install
-      - run: npm test
+      - run: npx jest --verbose
