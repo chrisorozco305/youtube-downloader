@@ -1,3 +1,5 @@
+import React from 'react';
+
 function formatDuration(secs) {
   if (!secs) return '—';
   const h = Math.floor(secs / 3600);

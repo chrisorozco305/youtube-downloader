@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import VideoInput from './components/VideoInput.jsx';
 import MetadataDisplay from './components/MetadataDisplay.jsx';
 import FormatSelector from './components/FormatSelector.jsx';

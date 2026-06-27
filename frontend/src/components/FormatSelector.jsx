@@ -1,3 +1,5 @@
+import React from 'react';
+
 function formatSize(mb) {
   if (mb === null || mb === undefined) return null;
   if (mb < 1) return `~${Math.round(mb * 1024)} KB`;

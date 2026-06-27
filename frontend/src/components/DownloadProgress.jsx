@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function DownloadProgress({ progress, onCancel, success, error }) {
   if (success) {
     return (

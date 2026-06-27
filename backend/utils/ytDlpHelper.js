@@ -57,14 +57,15 @@ const findFfmpegDir = (() => {
 // This prevents misuse (e.g., someone trying to download from other sites) and
 // gives the user a clear error message if they paste a bad URL.
 function sanitizeUrl(url) {
+  let parsed;
   try {
-    const parsed = new URL(url);
-    const allowed = ['youtube.com', 'www.youtube.com', 'youtu.be', 'm.youtube.com', 'music.youtube.com'];
-    if (!allowed.includes(parsed.hostname)) throw new Error('Not a YouTube URL');
-    return parsed.href;
+    parsed = new URL(url);
   } catch {
     throw new Error('Invalid YouTube URL');
   }
+  const allowed = ['youtube.com', 'www.youtube.com', 'youtu.be', 'm.youtube.com', 'music.youtube.com'];
+  if (!allowed.includes(parsed.hostname)) throw new Error('Not a YouTube URL');
+  return parsed.href;
 }
 
 // Parse the raw format list from yt-dlp (which can be hundreds of entries)
@@ -134,8 +135,10 @@ function parseFormats(rawFormats) {
 // This runs yt-dlp with --dump-json, which outputs video info as JSON to stdout.
 // We parse that JSON and extract: title, duration, thumbnail, available formats, etc.
 function getVideoInfo(url) {
-  const safeUrl = sanitizeUrl(url);
   return new Promise((resolve, reject) => {
+    let safeUrl;
+    try { safeUrl = sanitizeUrl(url); } catch (err) { return reject(err); }
+
     // --dump-json: output video metadata as JSON, don't actually download
     // --no-playlist: if it's a playlist, just get info on the first video
     const args = ['--dump-json', '--no-playlist', safeUrl];
